@@ -9,7 +9,7 @@ export default function SeleccionUser() {
     };
 
     const handleRestaurante = () => {
-        router.replace('/admin/eleccionResto');
+        router.push('/admin/escribirClave');
     };
 
     return (

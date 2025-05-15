@@ -1,33 +1,33 @@
 import { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Image, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Image } from 'react-native';
+import { restaurantsData } from '../../constants/data';
 
 export default function Index() {
     const [search, setSearch] = useState('');
     const router = useRouter();
 
     const handleSearch = () => {
-        if (search.trim()) {
-            const formattedId = search.trim().toLowerCase().replace(/\s+/g, '-');
+        const formattedId = search.trim().toLowerCase().replace(/\s+/g, '-');
+        if (restaurantsData[formattedId]) {
             router.push(`./restaurantes/${formattedId}`);
+        } else {
+            Alert.alert('Restaurante no encontrado');
         }
     };
 
     return (
-        <>
-            <View style={styles.container}>
-                <Image source={require('../../assets/images/logo.png')} style={styles.logo} />
-                <Text style={styles.title}>¿En qué restaurante estás?</Text>
-                <TextInput
-                    value={search}
-                    onChangeText={setSearch}
-                    placeholder="Ej: Astor, El Rey de los Tacos"
-                    style={styles.input}
-                />
-                <Button title="Buscar" onPress={handleSearch} />
-            </View>
-        </>
+        <View style={styles.container}>
+            <Image source={require('../../assets/images/logo.png')} style={styles.logo} />
+            <Text style={styles.title}>¿En qué restaurante estás?</Text>
+            <TextInput
+                value={search}
+                onChangeText={setSearch}
+                placeholder="Ej: Astor, El Rey de los Tacos"
+                style={styles.input}
+            />
+            <Button title="Buscar" onPress={handleSearch} />
+        </View>
     );
 }
 

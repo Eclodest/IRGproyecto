@@ -1,0 +1,63 @@
+CREATE DATABASE IF NOT EXISTS CataOculta
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
+
+USE CataOculta;
+
+-- Tabla: Restaurante
+CREATE TABLE Restaurante (
+    id_restaurante INT AUTO_INCREMENT PRIMARY KEY,
+    clave_acceso VARCHAR(255) NOT NULL UNIQUE
+) ENGINE=InnoDB;
+
+-- Tabla: Categoría
+CREATE TABLE Categoria (
+    id_categoria INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_categoria VARCHAR(100) NOT NULL
+) ENGINE=InnoDB;
+
+-- Tabla: Plato
+CREATE TABLE Plato (
+    id_plato INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_plato VARCHAR(255) NOT NULL,
+    tipo ENUM('comida', 'bebida') NOT NULL,
+    id_categoria INT NOT NULL,
+    id_restaurante INT NOT NULL,
+    FOREIGN KEY (id_categoria) REFERENCES Categoria(id_categoria)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_restaurante) REFERENCES Restaurante(id_restaurante)
+        ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+-- Tabla: Usuario
+CREATE TABLE Usuario (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    apellidos VARCHAR(100) NOT NULL,
+    telefono VARCHAR(20) NOT NULL,
+    ciudad VARCHAR(100) NOT NULL
+) ENGINE=InnoDB;
+
+-- Tabla: Reseña
+CREATE TABLE Reseña (
+    id_reseña INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_plato INT NOT NULL,
+    p1_satisfaccion TINYINT NOT NULL CHECK (p1_satisfaccion BETWEEN 1 AND 5),
+    p2_satisfaccion TINYINT NOT NULL CHECK (p2_satisfaccion BETWEEN 1 AND 5),
+    p3_satisfaccion TINYINT NOT NULL CHECK (p3_satisfaccion BETWEEN 1 AND 5),
+    p4_satisfaccion TINYINT NOT NULL CHECK (p4_satisfaccion BETWEEN 1 AND 5),
+    p5_satisfaccion TINYINT NOT NULL CHECK (p5_satisfaccion BETWEEN 1 AND 5),
+    p1_texto TEXT NOT NULL,
+    p2_texto TEXT NOT NULL,
+    p3_texto TEXT NOT NULL,
+    p4_texto TEXT NOT NULL,
+    p5_texto TEXT NOT NULL,
+    promedio_estrellas DECIMAL(3,2) GENERATED ALWAYS AS (
+        (p1_satisfaccion + p2_satisfaccion + p3_satisfaccion + p4_satisfaccion + p5_satisfaccion) / 5.0
+    ) STORED,
+    FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_plato) REFERENCES Plato(id_plato)
+        ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
