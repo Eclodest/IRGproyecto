@@ -2,14 +2,16 @@
   "name": "irg-frontend",
   "main": "expo-router/entry",
   "version": "1.0.0",
-  "scripts": {
-    "start": "expo start",
-    "reset-project": "node ./scripts/reset-project.js",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "lint": "expo lint"
-  },
+"scripts": {
+  "start": "expo start",
+  "build": "expo build:web",
+  "reset-project": "node ./scripts/reset-project.js",
+  "android": "expo start --android",
+  "ios": "expo start --ios",
+  "web": "expo start --web",
+  "lint": "expo lint"
+},
+
   "dependencies": {
     "@expo-google-fonts/inter": "^0.3.0",
     "@expo-google-fonts/playfair-display": "^0.3.0",
@@ -60,4 +62,7 @@
     "typescript": "~5.8.3"
   },
   "private": true
+  
 }
+
+
