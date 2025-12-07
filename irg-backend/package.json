@@ -2,9 +2,10 @@
   "name": "irg-backend",
   "version": "1.0.0",
   "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+"scripts": {
+  "start": "node app.js",
+  "dev": "node app.js"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -14,5 +15,9 @@
     "mysql": "^2.18.1",
     "mysql2": "^3.14.1"
   },
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "typescript": "^5.9.3"
+  }
 }
